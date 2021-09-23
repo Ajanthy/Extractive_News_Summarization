@@ -4,15 +4,8 @@ from nltk.corpus import stopwords
 from nltk.cluster.util import cosine_distance  # Measure Similarity between sentences
 import numpy as np
 import networkx as nx  # Creating and manipulating graph
+import math
 
-# text = """Claxton hunting first major medal
-#
-# British hurdler Sarah Claxton is confident she can win her first major medal at next month's European Indoor Championships in Madrid.
-#
-# The 25-year-old has already smashed the British record over 60m hurdles twice this season, setting a new mark of 7.96 seconds to win the AAAs title. "I am quite confident," said Claxton. "But I take each race as it comes. "As long as I keep up my training but not do too much I think there is a chance of a medal." Claxton has won the national 60m hurdles title for the past three years but has struggled to translate her domestic success to the international stage. Now, the Scotland-born athlete owns the equal fifth-fastest time in the world this year. And at last week's Birmingham Grand Prix, Claxton left European medal favourite Russian Irina Shevchenko trailing in sixth spot.
-#
-# For the first time, Claxton has only been preparing for a campaign over the hurdles - which could explain her leap in form. In previous seasons, the 25-year-old also contested the long jump but since moving from Colchester to London she has re-focused her attentions. Claxton will see if her new training regime pays dividends at the European Indoors which take place on 5-6 March.
-# """
 
 # Read the text and tokenize into sentences
 def read_article(text):
@@ -61,7 +54,7 @@ def build_similarity_matrix(sentences, stop_words):
 
 
 # Generate and return text summary
-def generate_summary_textrank(inputfilename, outputfilename, top_n = 5):
+def generate_summary_textrank(inputfilename, outputfilename):
     # Read text from file
     txtFile = open(inputfilename, "r")
     title = txtFile.readline()
@@ -74,25 +67,26 @@ def generate_summary_textrank(inputfilename, outputfilename, top_n = 5):
     # Step1: read text and tokenize
     sentences = read_article(text)
 
-    # Steo2: generate similarity matrix across sentences
+    # Step2: generate similarity matrix across sentences
     sentence_similarity_matrix = build_similarity_matrix(sentences, stop_words)
 
-    # Step3: Rank sentences in similarirty matrix
+    # Step3: Rank sentences in similarity matrix
     sentence_similarity_graph = nx.from_numpy_array(sentence_similarity_matrix)
     scores = nx.pagerank(sentence_similarity_graph)
 
     # Step4: sort the rank and place top sentences
     ranked_sentences = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
 
+    print("Number of sentences : " , int(math.ceil(len(sentences) * 0.2)))
     # Step 5: get the top n number of sentences based on rank
-    for i in range(top_n):
+    for i in range(int(math.ceil(len(sentences) * 0.05))):
         summarize_text.append("".join(ranked_sentences[i][1]))
 
-    # Step 6 : outpur the summarized version
+    # Step 6 : output the summarized version
     summarize_text = " ".join(summarize_text)
     print("Summarize Text textrank: \n", summarize_text)
     outF = open(outputfilename, "w")
     outF.write(summarize_text)
     outF.close()
 
-# generate_summary_textrank('politicaltext.txt', 'samplecosine.txt')
+generate_summary_textrank('politicaltext.txt', 'samplecosine.txt')
