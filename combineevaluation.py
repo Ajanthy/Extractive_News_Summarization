@@ -37,7 +37,7 @@ summarypath = '../BBC News Summary/Summaries/tech'
 #     for key in scores[0]:
 #         features_evaluation.writerow([f, key, scores[0][key]['p'], scores[0][key]['r'], scores[0][key]['f']])
 
-kmeans_file  = open('kmeans_file.csv', mode='w')
+kmeans_file  = open('csvs/kmeans_file.csv', mode='w')
 kmeans_evaluation = csv.writer(kmeans_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 kmeans_evaluation.writerow(['Evaluation for kmeans Summary'])
 kmeans_evaluation.writerow(['File Name', 'ROUGE', 'Precision', 'Recall', 'F-measure'])

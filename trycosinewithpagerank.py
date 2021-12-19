@@ -1,21 +1,19 @@
-import nltk
 from nltk.tokenize import sent_tokenize
 from nltk.corpus import stopwords
 from nltk.cluster.util import cosine_distance  # Measure Similarity between sentences
 import numpy as np
-import networkx as nx  # Creating and manipulating graph
+import networkx as nx  # Creating sentence similarity graph
 import math
-
 
 # Read the text and tokenize into sentences
 def read_article(text):
     sentences = sent_tokenize(text)
     return sentences
 
-# Create vectors and calculate cosine similarity b/w two sentences
-def sentence_similarity(sent1, sent2, stopwords=None):
-    if stopwords is None:
-        stopwords = []
+# Create vectors and calculate cosine similarity between two sentences
+def sentence_similarity(sent1, sent2, stopWords=None):
+    if stopWords is None:
+        stopWords = []
 
     sent1 = [w.lower() for w in sent1]
     sent2 = [w.lower() for w in sent2]
@@ -27,13 +25,13 @@ def sentence_similarity(sent1, sent2, stopwords=None):
 
     # build the vector for the first sentence
     for w in sent1:
-        if w in stopwords:
+        if w in stopWords:
             continue
         vector1[all_words.index(w)] += 1
 
     # build the vector for the second sentence
     for w in sent2:
-        if w in stopwords:
+        if w in stopWords:
             continue
         vector2[all_words.index(w)] += 1
 
@@ -45,10 +43,10 @@ def build_similarity_matrix(sentences, stop_words):
     # create an empty similarity matrix
     similarity_matrix = np.zeros((len(sentences), len(sentences)))
 
-    for idx1 in range(len(sentences)):
-        for idx2 in range(len(sentences)):
-            if idx1 != idx2:
-                similarity_matrix[idx1][idx2] = sentence_similarity(sentences[idx1], sentences[idx2], stop_words)
+    for sent1 in range(len(sentences)):
+        for sent2 in range(len(sentences)):
+            if sent1 != sent2:
+                similarity_matrix[sent1][sent2] = sentence_similarity(sentences[sent1], sentences[sent2], stop_words)
 
     return similarity_matrix
 
@@ -64,17 +62,17 @@ def generate_summary_textrank(inputfilename, outputfilename):
     stop_words = stopwords.words('english')
     summarize_text = []
 
-    # Step1: read text and tokenize
+    # Step 1: read text and tokenize
     sentences = read_article(text)
 
-    # Step2: generate similarity matrix across sentences
+    # Step 2: generate similarity matrix across sentences
     sentence_similarity_matrix = build_similarity_matrix(sentences, stop_words)
 
-    # Step3: Rank sentences in similarity matrix
+    # Step 3: Rank sentences in similarity matrix
     sentence_similarity_graph = nx.from_numpy_array(sentence_similarity_matrix)
     scores = nx.pagerank(sentence_similarity_graph)
 
-    # Step4: sort the rank and place top sentences
+    # Step 4: sort the rank and place top sentences
     ranked_sentences = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
 
     print("Number of sentences : " , int(math.ceil(len(sentences) * 0.2)))
@@ -89,4 +87,4 @@ def generate_summary_textrank(inputfilename, outputfilename):
     outF.write(summarize_text)
     outF.close()
 
-generate_summary_textrank('politicaltext.txt', 'samplecosine.txt')
+generate_summary_textrank('samples/politicaltext.txt', 'samples/samplecosine.txt')

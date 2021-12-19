@@ -19,14 +19,14 @@ def read_article(text):
     sentences = sent_tokenize(text)
     return sentences
 
-def evaluate(hypfile, reffile):
-    texthypFile = open(hypfile, "rt")
+def evaluate(genfile, reffile):
+    textGenFile = open(genfile, "rt")
     textreffile = open(reffile, "rt")
     reference = textreffile.read()
     print("No of sentences in reference : ", len(read_article(reference)))
-    hypotheses = texthypFile.read()
+    hypotheses = textGenFile.read()
     scores = rouge.get_scores(hypotheses, reference)
-    print("Score for ", hypfile, " : ", scores)
+    print("Score for ", genfile, " : ", scores)
     return scores
 
-evaluate('samplekmeans.txt', 'politicalsummary.txt')
+evaluate('samples/samplekmeans.txt', 'samples/politicalsummary.txt')

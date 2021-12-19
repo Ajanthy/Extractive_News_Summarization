@@ -14,9 +14,6 @@ def getcount(sentences):
 
 def selectsentences(sentences, n):
     randomlist = random.sample(range(1, len(sentences)), n)
-    # randomlist = []
-    # for i in range(n):
-    #     randomlist.append(i)
     print(randomlist)
     return  sorted(randomlist)
 

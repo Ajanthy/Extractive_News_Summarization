@@ -1,6 +1,5 @@
 import collections
 import math
-from collections import Counter
 import nltk
 import re
 
@@ -76,26 +75,6 @@ def uppercase_availability(mylines):
                 score = score + 1
         scores.append(1.0 * score / len(sentence))
     return scores
-
-# def tfisf(mylineslower):
-#     scores = []
-#     for sentence in tokenized_sentences(mylineslower):
-#         counts = collections.Counter(sentence)
-#         score = 0
-#         for word in counts.keys():
-#             sentence_availability = 0
-#             for sent in tokenized_sentences(mylineslower):
-#                 flag = False
-#                 for w in sent:
-#                     if word == w:
-#                         flag = True
-#                 if flag:
-#                     sentence_availability += 1
-#             score = score + ((counts[word] + 1)/len(sentence)) * math.log(len(mylineslower) / sentence_availability)
-#         scores.append(score)
-#     print("5. TFISF: ", len(scores))
-#     print("scores tf isf : ", scores)
-#     return scores
 
 def tfisf(mylineslower):
     scores = []

@@ -1,4 +1,3 @@
-# importing the libraries
 import math
 
 import nltk
@@ -69,4 +68,4 @@ def generate_summary_kmeans(inputfilename, outputfilename):
     outF.write(summarize_text)
     # print("Summary kmeans : ", summarize_text)
 
-generate_summary_kmeans('politicaltext.txt', 'samplekmeans.txt')
+generate_summary_kmeans('samples/politicaltext.txt', 'samples/samplekmeans.txt')
