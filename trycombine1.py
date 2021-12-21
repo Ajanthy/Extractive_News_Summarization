@@ -2,7 +2,7 @@ import os
 import csv
 
 from nltk import sent_tokenize
-from trycosinewithpagerank import generate_summary_textrank
+from graph import generate_summary_textrank
 from features import generate_summary_feature
 from kmeans import generate_summary_kmeans
 from rougeurdu import evaluate
@@ -20,8 +20,8 @@ combine_evaluation.writerow(['Evaluation for Combined Summary'])
 combine_evaluation.writerow(['File Name', 'ROUGE', 'Method', 'Precision', 'Recall', 'F-measure'])
 
 for f in os.listdir('sporttext'):
-    generate_summary_kmeans('sporttext/'+f, 'samplekmeans.txt')
-    kmeans_scores = evaluate('samplekmeans.txt', 'sportsummary/' + f)
+    generate_summary_kmeans('sporttext/'+f, 'samples/samplekmeans.txt')
+    kmeans_scores = evaluate('samples/samplekmeans.txt', 'sportsummary/' + f)
 
     generate_summary_feature('sporttext/' + f, 'samples/sampleFeatures.txt')
     features_scores = evaluate('samples/sampleFeatures.txt', 'sportsummary/' + f)

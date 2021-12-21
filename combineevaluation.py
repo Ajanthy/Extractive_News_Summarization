@@ -2,7 +2,7 @@ import os
 import csv
 
 from nltk import sent_tokenize
-from trycosinewithpagerank import generate_summary_textrank
+from graph import generate_summary_textrank
 from features import generate_summary_feature
 from kmeans import generate_summary_kmeans
 from summaryrandom import generate_summary_random
@@ -18,8 +18,8 @@ summarypath = '../BBC News Summary/Summaries/tech'
 # textrank_evaluation.writerow(['File Name', 'ROUGE', 'Precision', 'Recall', 'F-measure'])
 #
 # for f in os.listdir(filepath):
-#     generate_summary_textrank(filepath+'/'+f, 'samplecosine.txt')
-#     scores = evaluate('samplecosine.txt', summarypath+'/'+f)
+#     generate_summary_textrank(filepath+'/'+f, 'samples/samplecosine.txt')
+#     scores = evaluate('samples/samplecosine.txt', summarypath+'/'+f)
 #     scores[0] = dict(scores[0])
 #     for key in scores[0]:
 #         textrank_evaluation.writerow([f, key, scores[0][key]['p'], scores[0][key]['r'], scores[0][key]['f']])
@@ -31,8 +31,8 @@ summarypath = '../BBC News Summary/Summaries/tech'
 #
 # for f in os.listdir(filepath):
 #     print(f)
-#     generate_summary_feature(filepath+'/'+f, 'sampleFeatures.txt')
-#     scores = evaluate('sampleFeatures.txt', summarypath+'/'+f)
+#     generate_summary_feature(filepath+'/'+f, 'samples/sampleFeatures.txt')
+#     scores = evaluate('samples/sampleFeatures.txt', summarypath+'/'+f)
 #     scores[0] = dict(scores[0])
 #     for key in scores[0]:
 #         features_evaluation.writerow([f, key, scores[0][key]['p'], scores[0][key]['r'], scores[0][key]['f']])
@@ -43,8 +43,8 @@ kmeans_evaluation.writerow(['Evaluation for kmeans Summary'])
 kmeans_evaluation.writerow(['File Name', 'ROUGE', 'Precision', 'Recall', 'F-measure'])
 
 for f in os.listdir(filepath):
-    generate_summary_kmeans(filepath+'/'+f, 'samplekmeans.txt')
-    scores = evaluate('samplekmeans.txt', summarypath+'/'+f)
+    generate_summary_kmeans(filepath+'/'+f, 'samples/samplekmeans.txt')
+    scores = evaluate('samples/samplekmeans.txt', summarypath+'/'+f)
     scores[0] = dict(scores[0])
     for key in scores[0]:
         kmeans_evaluation.writerow([f, key, scores[0][key]['p'], scores[0][key]['r'], scores[0][key]['f']])

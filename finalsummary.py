@@ -2,7 +2,7 @@ import os
 import csv
 
 from nltk import sent_tokenize
-from trycosinewithpagerank import generate_summary_textrank
+from graph import generate_summary_textrank
 from features import generate_summary_feature
 from kmeans import generate_summary_kmeans
 from rougeurdu import evaluate
@@ -36,10 +36,6 @@ for f in os.listdir(filepath):
     z = set(sent_tokens_cosine).union(sent_tokens_features)
     # final = set(sent_tokens_kmeans).union(sent_tokens_cosine)
     final = z.union(sent_tokens_kmeans)
-    print("Graph tokens : " , len(sent_tokens_cosine))
-    print("Cluster tokens : " , len(sent_tokens_kmeans))
-    print("Features tokens : " , len(sent_tokens_features))
-    print("Final tokens : " , len(final))
 
     finalsummary = " ".join(final)
     outF = open('samples/finaloutput.txt', "w")

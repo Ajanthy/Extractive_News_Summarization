@@ -8,8 +8,6 @@ from scipy.spatial import distance
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-# sentence tokenization
-
 from nltk.tokenize import sent_tokenize
 
 def generate_summary_kmeans(inputfilename, outputfilename):
@@ -20,7 +18,7 @@ def generate_summary_kmeans(inputfilename, outputfilename):
 
     sent_tokens = sent_tokenize(text)
 
-    # cleaning the sentences
+    # Preprocessing (Removing numeric tokens, Lemmatization, Stop words Removal)
 
     sent_tokens_list = []
     for cluster_i in range(len(sent_tokens)):
@@ -32,6 +30,7 @@ def generate_summary_kmeans(inputfilename, outputfilename):
         sent = [lemmatizer.lemmatize(token, pos='v') for token in sent]
         sent = ' '.join([i for i in sent if i not in stopwords.words('english')])  # stop words removal
         sent_tokens_list.append(sent)
+
     # creating word vectors
     max_number_of_unique_words = 500
     word_tokens = [sentTokens.split() for sentTokens in sent_tokens_list]
@@ -45,6 +44,7 @@ def generate_summary_kmeans(inputfilename, outputfilename):
             count += model.wv[word_i]
         count = count / len(sent_i.split())
         sen_vector.append(count)
+
     # performing k-means
     n_clusters = int(math.ceil(len(sent_tokens) * 0.1))
     kMeans = KMeans(n_clusters)
@@ -53,7 +53,7 @@ def generate_summary_kmeans(inputfilename, outputfilename):
 
     my_list = []
     for cluster_i in range(n_clusters):  # In the range of clusters
-        my_dict = {}  # dict is null
+        my_dict = {}
         for sent_i in range(len(y_kMeans)):  # In the range of cluster index where it belongs
             if y_kMeans[sent_i] == cluster_i:  # if both cluster index and sentence's index matches
                 my_dict[sent_i] = distance.cosine(kMeans.cluster_centers_[cluster_i], sen_vector[sent_i])  # get the cosine of that vector

@@ -75,14 +75,13 @@ def generate_summary_textrank(inputfilename, outputfilename):
     # Step 4: sort the rank and place top sentences
     ranked_sentences = sorted(((scores[i], s) for i, s in enumerate(sentences)), reverse=True)
 
-    print("Number of sentences : " , int(math.ceil(len(sentences) * 0.2)))
     # Step 5: get the top n number of sentences based on rank
-    for i in range(int(math.ceil(len(sentences) * 0.05))):
+    for i in range(int(math.ceil(len(sentences) * 0.2))):
         summarize_text.append("".join(ranked_sentences[i][1]))
 
     # Step 6 : output the summarized version
     summarize_text = " ".join(summarize_text)
-    print("Summarize Text textrank: \n", summarize_text)
+    print("Summarize Text : \n", summarize_text)
     outF = open(outputfilename, "w")
     outF.write(summarize_text)
     outF.close()
