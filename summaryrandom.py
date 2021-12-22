@@ -1,7 +1,7 @@
 import random
 from nltk.tokenize import sent_tokenize
 import math
-from rougeurdu import evaluate
+from rougeng import evaluate
 
 def read_article(text):
     sentences = sent_tokenize(text)
@@ -36,5 +36,5 @@ def generate_summary_random(inputfilename,outputfilename):
 
     printsummary(randomlist, read_article(text), outputfilename)
 
-generate_summary_random('politicaltext.txt', 'results.txt')
-evaluate('results.txt', 'politicalsummary.txt')
+generate_summary_random('samples/politicaltext.txt', 'samples/results.txt')
+evaluate('samples/results.txt', 'samples/politicalsummary.txt')

@@ -5,7 +5,7 @@ from nltk import sent_tokenize
 from graph import generate_summary_textrank
 from features import generate_summary_feature
 from kmeans import generate_summary_kmeans
-from rougeurdu import evaluate
+from rougeng import evaluate
 
 def readFile_token(outputfilename):
     textFile = open(outputfilename, "rt")

@@ -7,7 +7,7 @@ from features import generate_summary_feature
 from kmeans import generate_summary_kmeans
 from summaryrandom import generate_summary_random
 
-from rougeurdu import evaluate
+from rougeng import evaluate
 
 filepath = '../BBC News Summary/News Articles/tech'
 summarypath = '../BBC News Summary/Summaries/tech'

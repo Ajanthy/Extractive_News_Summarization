@@ -68,7 +68,7 @@ def generate_summary_textrank(inputfilename, outputfilename):
     # Step 2: generate similarity matrix across sentences
     sentence_similarity_matrix = build_similarity_matrix(sentences, stop_words)
 
-    # Step 3: Rank sentences in similarity matrix
+    # Step 3: Rank sentences in similarity graph
     sentence_similarity_graph = nx.from_numpy_array(sentence_similarity_matrix)
     scores = nx.pagerank(sentence_similarity_graph)
 

@@ -50,7 +50,7 @@ def sent_length_score(mylineslower):
 
 
 def sent_loc_score(mylines):
-    count = len(mylines)
+    count = len(mylines) # Includes the count of title
     sent_location_score_matrix = []
     for i in range(count):
         if i == 1 or i == count - 1:
@@ -68,7 +68,7 @@ def tokenized_sentences(mylines):
 def uppercase_availability(mylines):
     upper_case = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     scores = []
-    for sentence in tokenized_sentences(mylines):
+    for sentence in tokenized_sentences(mylines): # find whether a word starts with uppercase letter
         score = 0
         for word in sentence:
             if word[0] in upper_case:
@@ -144,7 +144,7 @@ def centroidSimilarity(sentences, tfIsfScore):
     centroidIndex = tfIsfScore.index(max(tfIsfScore))
     scores = []
     for sentence in sentences:
-        vec1 = text_to_vector(sentences[centroidIndex])
+        vec1 = text_to_vector(sentences[centroidIndex]) # get the sentence has maxtfisfscore
         vec2 = text_to_vector(sentence)
 
         score = get_cosine(vec1, vec2)
@@ -190,7 +190,7 @@ def generate_summary_feature(inputfilename, outputfilename):
     newlist = [x + y + z + a +b + c + d + e + f  for x, y, z, a, b, c, d, e,f in zip(scoreWithLoc, scoreWithTitle, scoreWithLength, scorewithuppercase,scoretfisf,scorejaccardsimilarity,scorePropernoun, scorenumerictoken,scorecentroidsimilarity)]
     ranked_sentences = dict(create_dict(sentence, newlist))
     summarize_text = []
-    for i in range(math.ceil(len(ranked_sentences) * 0.4)):
+    for i in range(math.ceil(len(ranked_sentences) * 0.3)):
         summarize_text.append("".join(list(ranked_sentences.values())[i]))
     summarize_text = ' '.join(map(str, summarize_text))
     print("Summary features: ",  summarize_text)

@@ -5,7 +5,7 @@ from nltk import sent_tokenize
 from graph import generate_summary_textrank
 from features import generate_summary_feature
 from kmeans import generate_summary_kmeans
-from rougeurdu import evaluate
+from rougeng import evaluate
 
 filepath = '../BBC News Summary/News Articles/politics'
 summarypath = '../BBC News Summary/Summaries/politics'
